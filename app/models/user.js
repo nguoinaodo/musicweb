@@ -11,7 +11,7 @@ class User {
 		this._email = props.email;
 		this._displayName = props.displayName;
 		this._birthday = props.birthday;
-		this._livingIn = prosp.livingIn;
+		this._livingIn = props.livingIn;
 		if (props.encryptedPassword) {
 			this._password = props.encryptedPassword;
 		} else {
@@ -101,7 +101,7 @@ class User {
 		});
 	}
 
-	static findByUsername(email, callback) {
+	static findByUsername(username, callback) {
 		pool.getConnection((err, conn) => {
 			if (err) { return callback(err); }
 

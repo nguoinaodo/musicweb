@@ -9,6 +9,6 @@ const userRouter = require('./user');
 // Set session
 router.use(session);
 
-router.use('/router', userRouter);
+router.use('/user', userRouter);
 
 module.exports = router;

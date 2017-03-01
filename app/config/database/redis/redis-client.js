@@ -9,8 +9,8 @@ client.on('error', (err) => {
 
 client.on('connect', (connect) => {
 	console.log('Connected to redis');
-	client.select(2, () => {
-		console.log('Use redis db2');
+	client.select(3, () => {
+		console.log('Use redis db3');
 	});
 });
 
