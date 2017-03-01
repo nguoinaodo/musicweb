@@ -3,7 +3,7 @@
 const pool = require(global.__base + 'app/config/database/mysql/pool');
 const bcrypt = require('bcrypt-nodejs');
 
-class User() {
+class User {
 
 	constructor(props) {
 		this._userId = props.userId;
