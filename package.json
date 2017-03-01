@@ -1,0 +1,15 @@
+{
+  "name": "musicweb",
+  "version": "1.0.0",
+  "description": "Music web ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "luuhoang, chostung",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.14.1"
+  }
+}
