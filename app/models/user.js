@@ -2,6 +2,7 @@
 
 const pool = require(global.__base + 'app/config/database/mysql/pool');
 const bcrypt = require('bcrypt-nodejs');
+const moment = require('moment');
 
 class User {
 
@@ -74,7 +75,10 @@ class User {
 					return callback(null, null);
 				}
 
-				let info = Object.assign({}, rows[0], { encryptedPassword: rows[0].password });
+				let info = Object.assign({}, rows[0], { 
+					encryptedPassword: rows[0].password,
+					birthday: moment(rows[0].birthday).format('YYYY-MM-DD')
+				});
 				let user = new User(info);
 				return callback(null, user);
 			});
@@ -94,7 +98,10 @@ class User {
 					return callback(null, null);
 				}
 
-				let info = Object.assign({}, rows[0], { encryptedPassword: rows[0].password });
+				let info = Object.assign({}, rows[0], { 
+					encryptedPassword: rows[0].password,
+					birthday: moment(rows[0].birthday).format('YYYY-MM-DD')
+				});
 				let user = new User(info);
 				return callback(null, user);
 			});
@@ -114,7 +121,10 @@ class User {
 					return callback(null, null);
 				}
 
-				let info = Object.assign({}, rows[0], { encryptedPassword: rows[0].password });
+				let info = Object.assign({}, rows[0], { 
+					encryptedPassword: rows[0].password,
+					birthday: moment(rows[0].birthday).format('YYYY-MM-DD')
+				});
 				let user = new User(info);
 				return callback(null, user);
 			});
