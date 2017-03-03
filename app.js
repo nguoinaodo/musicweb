@@ -10,7 +10,9 @@ const bodyParser = require('body-parser');
 // Body parser
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(bodyParser.json({ limit: '100mb' }));
-
+// Log
+const log = require(global.__base + 'app/controllers/middleware').log;
+app.use('/', log);
 // Routes
 const apiRouter = require(global.__base + 'app/routes/api/index');
 app.use('/api', apiRouter);
