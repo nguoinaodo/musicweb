@@ -9,9 +9,16 @@
   "author": "luuhoang, chostung",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.1",
+    "connect-redis": "^3.2.0",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",
+<<<<<<< HEAD
     "redis": "^2.6.5"
+=======
+    "express-session": "^1.15.1",
+    "mysql": "^2.13.0"
+>>>>>>> 885448564faf7a90013c1acf66cfc69cb4fa7913
   }
 }
