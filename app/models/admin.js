@@ -53,6 +53,8 @@ class Admin {
         return bcrypt.compareSync(password, this._password);
     }
 
+
+    //Tìm kiếm bằng ID chỉ trả về 1 kq
     static findById(id, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
@@ -70,6 +72,7 @@ class Admin {
         });
     }
 
+    //Tìm kiếm bằng username chỉ trả về 1 kết quả
     static findByUsername(username, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
@@ -84,6 +87,8 @@ class Admin {
             });
         });
     }
+
+    //Tìm kiếm bằng email chỉ trả về 1 kq
     static findByEmail(email, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
@@ -100,3 +105,4 @@ class Admin {
     }
 
 }
+module.exports = Admin;

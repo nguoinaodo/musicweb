@@ -64,6 +64,8 @@ class Song {
     toJSON(callback) {
         return callback(null, this.rawData());
     }
+
+    //Tìm kiếm bằng ID, chỉ trả về một kết quả
     static findById(id, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
@@ -78,22 +80,27 @@ class Song {
         });
     }
 
+    // Tìm kiếm theo tên, có thể trả về nhiều kq
     static findByName(name, callback) {
-        pool.getConnection((err, connection) => {
-            if (err) { return callback(err); }
-            let query = 'select * from song where name= ?';
-            connection.query(query, [name], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) {
-                    return callback(null, null);
-                }
-                let song = new Song(results[0]);
-                return callback(null, song);
+            pool.getConnection((err, connection) => {
+                if (err) { return callback(err); }
+                let query = 'select * from song where name= ?';
+                connection.query(query, [name], (err, results) => {
+                    connection.release();
+                    if (err) return callback(err);
+                    if (!results[0]) {
+                        return callback(null, null);
+                    }
+                    let data = [];
+                    for (var i = 0; i < results[0].length; i++) {
+                        data.push(new Song(results[0][i]));
+                    }
+                    return callback(null, data);
 
+                });
             });
-        });
-    }
+        }
+        //Tìm kiếm theo ca sĩ, có thể trả về nhiều kq
     static findbySinger(name, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
@@ -111,6 +118,7 @@ class Song {
         });
     }
 
+    //Trả về tất cả bài hát
     static findAllSong(callback) {
         pool.getConnection((err, connection) => {
             if (err) { return callback(err); }
