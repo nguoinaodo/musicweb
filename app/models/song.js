@@ -54,8 +54,7 @@ class Song {
             connection.query(query, [song], (err, results) => {
                 connection.release();
                 if (err) return callback(err);
-                //Đoạn này bên User của m có tao đọc không hiểu lắm cái insertId
-                // this._songId = results.insertId;
+                this._songId = results.insertId;
                 callback(null);
             });
         });
@@ -64,6 +63,19 @@ class Song {
 
     toJSON(callback) {
         return callback(null, this.rawData());
+    }
+    static findById(id, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'select * from song where songID= ?';
+            connection.query(query, [id], (err, results) => {
+                connection.release();
+                if (err) return callback(err);
+                if (!results[0]) return callback(null, null);
+                let song = new Song(results[0]);
+                return callback(null, song);
+            });
+        });
     }
 
     static findByName(name, callback) {
@@ -84,7 +96,7 @@ class Song {
     }
     static findbySinger(name, callback) {
         pool.getConnection((err, connection) => {
-            if (err) callback(err);
+            if (err) return callback(err);
             let query = "select song.* from song as s, artist as a, present as p where a.name= ? and a.artistId=p.artistId and p.songId=s.songId";
             connection.query(query, [name], (err, results) => {
                 connection.release();
@@ -117,3 +129,5 @@ class Song {
     }
 
 }
+
+module.exports = Song;
