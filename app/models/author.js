@@ -23,7 +23,7 @@ class Author {
     save(callback) {
         pool.getConnection((err, conenction) => {
             if (err) return callback(err);
-            let query = 'insert into author set = ?';
+            let query = 'insert into author set  ?';
             let author = Object.assign({}, this.rawData());
             connection.query(query, [author], (err, results) => {
                 connection.release();

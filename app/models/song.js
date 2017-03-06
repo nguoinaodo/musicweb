@@ -104,7 +104,7 @@ class Song {
     static findbySinger(name, callback) {
             pool.getConnection((err, connection) => {
                 if (err) return callback(err);
-                let query = "select song.* from song as s, artist as a, present as p where a.name= ? and a.artistId=p.artistId and p.songId=s.songId";
+                let query = "select s.* from song as s, artist as a, present as p where a.name= ? and a.artistId=p.artistId and p.songId=s.songId";
                 connection.query(query, [name], (err, results) => {
                     connection.release();
                     let data = [];
@@ -119,17 +119,34 @@ class Song {
         }
         //Tìm kiếm theo tác giả, có thể trả về nhiều kết quả
     static findByAuthor(name, callback) {
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'select s.* from song as s, author as au where au.authorId = s.authorId and au.name = ? ';
+                connection.query(query, [name], (err, results) => {
+                    connection.release();
+                    let data = [];
+                    if (err) return callback(err);
+                    if (!results[0]) return callback(null, null);
+                    for (var i = 0; i < results[0].length; i++) {
+                        data.push(new Song(results[0][i]));
+                    }
+                    callback(null, data);
+                });
+            });
+        }
+        //Tìm bài hát theo zone, có thể trả về nhiều kết quả
+    static findByZone(name, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = 'select song.* from song as s, author as au where au.authorId = s.authorId and au.name = ? ';
+            let query = 'select s.* from song as s, zone as z where z.zoneId = s.zoneId and z.name = ?';
             connection.query(query, [name], (err, results) => {
                 connection.release();
-                let data = [];
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
-                for (var i = 0; i < results[0].length; i++) {
-                    data.push(new Song(results[0][i]));
-                }
+                let data = [];
+                results[0].forEach(function(item) {
+                    data.push(new Song(item));
+                });
                 callback(null, data);
             });
         });
