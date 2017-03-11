@@ -49,7 +49,7 @@ class Comments {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     let props = {
                         commentId: item.commentId,
                         content: item.content
@@ -75,7 +75,7 @@ class Comments {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     let props = {
                         commentId: item.commentId,
                         content: item.content

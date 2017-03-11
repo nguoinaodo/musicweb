@@ -61,7 +61,7 @@ class Playlist {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     data.push(new Playlist(item));
                 });
                 callback(null, data);
@@ -79,7 +79,7 @@ class Playlist {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     data.push(new Playlist(item));
                 });
                 callback(null, data);
@@ -98,7 +98,7 @@ class Playlist {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     data.push(new Playlist(item));
                 });
                 callback(null, data);

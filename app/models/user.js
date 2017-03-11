@@ -46,8 +46,10 @@ class User {
             let user = Object.assign({}, this.rawData(), { password: this._password });
             conn.query(query, [user], (err, result) => {
                 conn.release();
-                if (err) return callback(err);
-
+                if (err) {
+                    console.log(err);
+                    return callback(err);
+                }
                 this._userId = result.insertId;
                 callback(null);
             });

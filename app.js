@@ -1,15 +1,16 @@
 'use strict';
 
 require('dotenv').load();
-global.__base  = process.cwd() + '/';
-
+global.__base = process.cwd() + '/';
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 // Body parser
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(bodyParser.json({ limit: '100mb' }));
+
 // Log
 const log = require(global.__base + 'app/controllers/middleware').log;
 app.use('/', log);
@@ -18,10 +19,9 @@ const apiRouter = require(global.__base + 'app/routes/api/index');
 app.use('/api', apiRouter);
 // Test
 app.get('/', (req, res) => {
-	res.send('OK');
+    res.sendFile(global.__base + 'app/routes/api/index.html');
 });
-
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-	console.log('Server is listening at port ' + port);
+    console.log('Server is listening at port ' + port);
 });

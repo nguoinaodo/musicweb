@@ -21,7 +21,7 @@ class Author {
     }
 
     save(callback) {
-        pool.getConnection((err, conenction) => {
+        pool.getConnection((err, connection) => {
             if (err) return callback(err);
             let query = 'insert into author set  ?';
             let author = Object.assign({}, this.rawData());
@@ -62,9 +62,9 @@ class Author {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                for (var i = 0; i < results[0].length; i++) {
-                    data.push(new Author(results[0][i]));
-                }
+                results.forEach(function(item) {
+                    data.push(new Author(item));
+                });
                 callback(null, data);
             });
         });

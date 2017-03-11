@@ -1,7 +1,5 @@
 const pool = require(global.__base + 'app/config/database/mysql/pool');
 
-
-
 class Song {
 
     constructor(props) {
@@ -10,6 +8,7 @@ class Song {
         this._description = props.description;
         this._dateTime = props.dateTime;
         this._type = props.type;
+        this._link = props.link;
         this._listen = props.listen;
         this._download = props.download;
         this._userId = props.userId;
@@ -23,6 +22,7 @@ class Song {
     get description() { return this._description; }
     get dateTime() { return this._dateTime; }
     get type() { return this._type; }
+    get link() { return this._link; }
     get listen() { return this._listen; }
     get download() { return this._download; }
     get userId() { return this._userId; }
@@ -36,6 +36,7 @@ class Song {
             name: this.name,
             description: this.description,
             dateTime: this.dateTime,
+            link: this.link,
             type: this.type,
             listen: this.listen,
             download: this.download,
@@ -47,16 +48,52 @@ class Song {
     }
     save(callback) {
         pool.getConnection((err, connection) => {
-            if (err) { return callback(err); }
-            let query = "insert into song set ?";
-            let song = Object.assign({}, this.rawData()); //copy dữ liệu từ rawData() và object trống và trả về song
-
-            connection.query(query, [song], (err, results) => {
+            if (err) {
+                console.log(err);
+                return callback(err);
+            }
+            console.log(this.rawData());
+            let query = "INSERT INTO song SET ?";
+            connection.query(query, [this.rawData()], (err, results) => {
                 connection.release();
-                if (err) return callback(err);
+                if (err) {
+                    console.log(err);
+                    return callback(err);
+                }
                 this._songId = results.insertId;
                 callback(null);
+
             });
+        });
+
+    }
+    savePresent(songId, name, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'select * from artist where name = ?';
+            connection.query(query, [name], (err, results) => {
+                if (err) {
+                    console.log(err);
+                    return callback(err);
+                } else {
+                    let info = {
+                        songId: songId,
+                        artistId: results[0].artistId
+                    };
+                    let query = 'insert into present set ?';
+                    connection.query(query, [info], (err, results) => {
+                        connection.release();
+                        if (err) {
+                            console.log(err);
+                            return callback(err);
+                        }
+                        callback(null);
+
+                    });
+                }
+            });
+
+
         });
 
     }
@@ -69,7 +106,7 @@ class Song {
     static findById(id, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = 'select * from song where songID= ?';
+            let query = 'select * from song where songId= ?';
             connection.query(query, [id], (err, results) => {
                 connection.release();
                 if (err) return callback(err);
@@ -87,14 +124,19 @@ class Song {
                 let query = 'select * from song where name= ?';
                 connection.query(query, [name], (err, results) => {
                     connection.release();
-                    if (err) return callback(err);
+                    if (err) {
+                        console.log(err);
+                        return callback(err);
+                    }
                     if (!results[0]) {
+                        console.log("HIHI");
                         return callback(null, null);
                     }
                     let data = [];
-                    for (var i = 0; i < results[0].length; i++) {
-                        data.push(new Song(results[0][i]));
-                    }
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
+                    console.log(data);
                     return callback(null, data);
 
                 });
@@ -110,9 +152,9 @@ class Song {
                     let data = [];
                     if (err) return callback(err);
                     if (!results[0]) return callback(null, null);
-                    for (var i = 0; i < results[0].length; i++) {
-                        data.push(new Song(results[0][i]));
-                    }
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
                     callback(null, data); //Đoán là làm thế chứ ko chắc
                 });
             });
@@ -127,24 +169,41 @@ class Song {
                     let data = [];
                     if (err) return callback(err);
                     if (!results[0]) return callback(null, null);
-                    for (var i = 0; i < results[0].length; i++) {
-                        data.push(new Song(results[0][i]));
-                    }
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
                     callback(null, data);
                 });
             });
         }
         //Tìm bài hát theo zone, có thể trả về nhiều kết quả
     static findByZone(name, callback) {
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'select s.* from song as s, zone as z where z.zoneId = s.zoneId and z.name = ?';
+                connection.query(query, [name], (err, results) => {
+                    connection.release();
+                    if (err) return callback(err);
+                    if (!results[0]) return callback(null, null);
+                    let data = [];
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
+                    callback(null, data);
+                });
+            });
+        }
+        //Tìm kiếm bằng category, trả về nhiều kết quả
+    static findByCategory(name, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = 'select s.* from song as s, zone as z where z.zoneId = s.zoneId and z.name = ?';
+            let query = 'select s.* from song as s, category as c where c.name = ? and s.categoryId = c.categoryId';
             connection.query(query, [name], (err, results) => {
                 connection.release();
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                results[0].forEach(function(item) {
+                results.forEach(function(item) {
                     data.push(new Song(item));
                 });
                 callback(null, data);
@@ -152,20 +211,18 @@ class Song {
         });
     }
 
-    //Trả về tất cả bài hát
-    static findAllSong(callback) {
+    //Xóa song bằng ID
+    static deleteSong(userId, songId, callback) {
         pool.getConnection((err, connection) => {
-            if (err) { return callback(err); }
-            let query = 'select * from song';
-            connection.query(query, [], (err, results) => {
+            if (err) return callback(err);
+            let query = "delete from song where userId = ? and songId = ? ";
+            connection.query(query, [userId, songId], (err, results) => {
                 connection.release();
-                let data = [];
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                for (var i = 0; i < results[0].length; i++) {
-                    data.push(new Song(results[0][i]));
+                if (err) {
+                    console.log(err);
+                    return callback(err);
                 }
-                return callback(null, data); // Phần này tao ko biết khởi tạo cái đối tượng từng song nên t làm thế, có gì thì sửa cho tao
+                return callback(null);
             });
         });
     }
