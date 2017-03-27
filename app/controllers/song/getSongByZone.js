@@ -1,26 +1,21 @@
 'use strict';
 const Song = require(global.__base + 'app/models/song.js');
+// Trả về bài hát ở cùng một category
 
-
-//Trả về thông tin bài hát từ bảng song
-let getSongName = (req, res) => {
-    Song.findByName(req.body.name, (err, song) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ errCode: 500, msg: 'Interal error' });
-        }
+let findSongByZone = (req, res) => {
+    Song.findByZone(req.body.name, (err, song) => {
+        if (err) return callback(err);
         if (!song) {
             return res.status(404).json({ errCode: 404, msg: 'Not found' });
         } else {
             let resData = [];
             song.forEach(function(item) {
-                item.toJSON((err, songJSON) => {
-                    resData.push(songJSON);
+                item.toJSON((err, songJson) => {
+                    resData.push(songJson);
                 });
             });
             return res.status(200).json({ errCode: 0, msg: 'Success', data: resData });
         }
     });
 }
-
-module.exports = getSongName;
+module.exports = findSongByZone;

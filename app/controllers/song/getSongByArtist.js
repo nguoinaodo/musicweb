@@ -1,13 +1,12 @@
 'use strict';
 const Song = require(global.__base + 'app/models/song.js');
 
-
-//Trả về thông tin bài hát từ bảng song
-let getSongName = (req, res) => {
-    Song.findByName(req.body.name, (err, song) => {
+//Trả về thông tin bài hát mà ca sĩ trình bày
+let getSongByArtist = (req, res) => {
+    Song.findBySinger(req.body.name, (err, song) => {
         if (err) {
             console.log(err);
-            return res.status(500).json({ errCode: 500, msg: 'Interal error' });
+            return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
         if (!song) {
             return res.status(404).json({ errCode: 404, msg: 'Not found' });
@@ -22,5 +21,4 @@ let getSongName = (req, res) => {
         }
     });
 }
-
-module.exports = getSongName;
+module.exports = getSongByArtist;

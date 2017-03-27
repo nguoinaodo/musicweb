@@ -121,7 +121,7 @@ class Song {
     static findByName(name, callback) {
             pool.getConnection((err, connection) => {
                 if (err) { return callback(err); }
-                let query = 'select * from song where name= ?';
+                let query = 'select * from song where name = ?';
                 connection.query(query, [name], (err, results) => {
                     connection.release();
                     if (err) {
@@ -129,24 +129,22 @@ class Song {
                         return callback(err);
                     }
                     if (!results[0]) {
-                        console.log("HIHI");
                         return callback(null, null);
                     }
                     let data = [];
                     results.forEach(function(item) {
                         data.push(new Song(item));
                     });
-                    console.log(data);
                     return callback(null, data);
 
                 });
             });
         }
         //Tìm kiếm theo ca sĩ, có thể trả về nhiều kq
-    static findbySinger(name, callback) {
+    static findBySinger(name, callback) {
             pool.getConnection((err, connection) => {
                 if (err) return callback(err);
-                let query = "select s.* from song as s, artist as a, present as p where a.name= ? and a.artistId=p.artistId and p.songId=s.songId";
+                let query = "select s.* from song as s, artist as a, present as p where a.name= ? and a.artistId = p.artistId and p.songId = s.songId";
                 connection.query(query, [name], (err, results) => {
                     connection.release();
                     let data = [];
@@ -155,7 +153,7 @@ class Song {
                     results.forEach(function(item) {
                         data.push(new Song(item));
                     });
-                    callback(null, data); //Đoán là làm thế chứ ko chắc
+                    callback(null, data);
                 });
             });
         }
@@ -210,6 +208,43 @@ class Song {
             });
         });
     }
+    static findByType(type, callback) {
+            let code;
+            if (type === 'video/mp4') code = 1;
+            else code = 0;
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'select * from song where type = ?';
+                connection.query(query, [code], (err, results) => {
+                    connection.release();
+                    if (err) return callback(err);
+                    if (!results[0]) return callback(null, null);
+                    let data = [];
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
+                    callback(null, data);
+                });
+            });
+
+
+
+        }
+        //Tìm kiếm thông tin trình diễn
+    static findPresent(name, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'select s.*, a.name as perform from song as s, artist as a, present as p where s.name = ? and s.songId = p.songId and p.artistId = a.artistId';
+            connection.query(query, [name], (err, results) => {
+                connection.release();
+                if (err) {
+                    console.log(err);
+                    return callback(err);
+                }
+                return callback(null, results);
+            });
+        });
+    }
 
     //Xóa song bằng ID
     static deleteSong(userId, songId, callback) {
@@ -223,6 +258,39 @@ class Song {
                     return callback(err);
                 }
                 return callback(null);
+            });
+        });
+    }
+
+    //Cập nhật lượt nghe của bài hát
+    static updateListening(songId, callback) {
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'update song set listen = listen + 1 where songId = ?';
+                connection.query(query, [songId], (err, results) => {
+                    connection.release();
+                    if (err) {
+                        console.log(err);
+                        return callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            });
+        }
+        //Cập nhật lượt tải của bài hát
+    static updateDownload(songId, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'update song set download = download+ 1 where songId = ?';
+            connection.query(query, [songId], (err, results) => {
+                connection.release();
+                if (err) {
+                    console.log(err);
+                    return callback(err);
+                } else {
+                    callback(null);
+                }
             });
         });
     }
