@@ -39,6 +39,7 @@ let login = (req, res) => {
                     });
                 }
                 req.session.adminId = adminJSON.adminId;
+                console.log(req.session.adminId);
                 let resData = { admin: adminJSON }
                 return res.status(200).json({
                     errCode: 0,

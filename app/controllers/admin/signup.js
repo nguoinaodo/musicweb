@@ -55,4 +55,4 @@ let signup = (req, res) => {
 
 
 }
-module.exports = singup
+module.exports = signup
