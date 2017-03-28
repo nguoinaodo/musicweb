@@ -42,7 +42,7 @@ class Artist {
         return callback(null, this.rawData());
     }
 
-    //Tìm kiếm bằng tên, có thể trả về một kết quả
+    //Tìm kiếm bằng tên, chỉ có thể trả về một kết quả
     static findByName(name, callback) {
             pool.getConnection((err, connection) => {
                 if (err) { return callback(err); }
@@ -82,9 +82,9 @@ class Artist {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 let data = [];
-                for (var i = 0; i < results[0].length; i++) {
-                    data.push(new Artist(results[0][i]));
-                }
+                results.forEach(function(item) {
+                    data.push(new Artist(item));
+                });
                 callback(null, data);
             });
         });
