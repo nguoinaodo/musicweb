@@ -1,7 +1,7 @@
 "use strict";
 
 let logging = (req, res, next) => {
-	console.log('===================' + new Date());
+	console.log('=================== ' + new Date());
 	console.log(req.method, req.url);
 	console.log("Header: {");
 	console.log("    X-Auth-Token:", req.get('X-Auth-Token'));

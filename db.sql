@@ -134,3 +134,6 @@ alter table `song_in_playlist`
     add constraint `song_in_playlist_songId` foreign key (`songId`) references `song`(`songId`) on delete cascade,
     add constraint `song_in_playlist_playlistId` foreign key (`playlistId`) references `playlist`(`playlistId`) on delete cascade;
 
+--
+alter table `user` add column gender tinyint;
+alter table song add column link varchar(128);
