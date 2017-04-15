@@ -335,7 +335,7 @@ class Song {
             queryList.push('author.name = ?');
             valueList.push(queryObj.authorName);
         }
-        let orderBy = 'songId';
+        let orderBy = ' song.songId';
         let sort = ' DESC';
         switch (queryObj.orderBy) {
             case 'songId':
@@ -351,7 +351,7 @@ class Song {
                 orderBy = 'song.name';
                 break;
             default:
-                orderBy = 'song.songId';
+                orderBy = ' song.songId';
         }
         if (queryObj.sort === 'ASC') {
             sort = ' ASC';
