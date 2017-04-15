@@ -40,34 +40,28 @@ class Author {
         // Tìm kiếm bằng ID, trả về 1 kết quả
 
     static findById(id, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'select * from author where authorId = ?';
+        pool.query(query, [id], (err, results) => {
             if (err) return callback(err);
-            let query = 'select * from author where authorId = ?';
-            connection.query(query, [id], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                return callback(null, new Author(results[0]));
-            });
+            if (!results[0]) return callback(null, null);
+            return callback(null, new Author(results[0]));
         });
+
     }
 
     //Tìm theo tên, có thể trả về nhiều kết quả
     static findByName(name, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'select * from author where name = ?';
+        pool.query(query, [name], (err, results) => {
             if (err) return callback(err);
-            let query = 'select * from author where name = ?';
-            connection.query(query, [name], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let data = [];
-                results.forEach(function(item) {
-                    data.push(new Author(item));
-                });
-                callback(null, data);
+            if (!results[0]) return callback(null, null);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Author(item));
             });
+            callback(null, data);
         });
+
     }
 
 

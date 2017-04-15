@@ -7,7 +7,7 @@ let deleteSong = (req, res) => {
         userId: req.user !== undefined ? req.user.userId : null,
         songId: req.body.songId
     };
-    if (info.userId === null && req.admin.adminId === null) {
+    if ((info.userId === null && req.admin === null) || (info.userId === undefined && req.admin === undefined)) {
         return res.status(403).json({ errCode: -3, msg: 'Access is Denied' });
     }
     Song.findById(info.songId, (err, song) => {
@@ -18,7 +18,7 @@ let deleteSong = (req, res) => {
 
         else {
             var path = global.__base + '/' + song.link;
-            if (req.admin.adminId !== null && req.admin.adminId !== undefined) {
+            if (req.admin !== null && req.admin !== undefined) {
                 console.log(req.session);
                 Song.deleteSongAdmin(info.songId, (err, info) => {
                     if (err) return res.status(500).json({ errCode: 500, msg: 'Internal error' });
