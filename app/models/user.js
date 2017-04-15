@@ -13,6 +13,8 @@ class User {
         this._displayName = props.displayName;
         this._birthday = props.birthday;
         this._livingIn = props.livingIn;
+        this._gender = props.gender;
+        this._isBlock = props.isBlock;
         if (props.encryptedPassword) {
             this._password = props.encryptedPassword;
         } else {
@@ -26,7 +28,8 @@ class User {
     get displayName() { return this._displayName; }
     get birthday() { return this._birthday; }
     get livingIn() { return this._livingIn; }
-
+    get gender() { return this._gender; }
+    get isBlock() { return this._isBlock; }
     rawData() {
         return {
             userId: this.userId,
@@ -34,7 +37,9 @@ class User {
             email: this.email,
             displayName: this.displayName,
             birthday: this.birthday,
-            livingIn: this.livingIn
+            livingIn: this.livingIn,
+            gender: this.gender,
+            isBlock: this.isBlock
         };
     }
 

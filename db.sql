@@ -61,13 +61,6 @@ create table `playlist` (
     `userId` int not null,
     primary key (`playlistId`)
 );
-
-create table `comment` (
-	`commentId` int not null auto_increment,
-    `content` varchar(512),
-    primary key (`commentId`)
-);
-
 create table `zone` (
 	`zoneId` int not null auto_increment,
     `name` varchar(64),
@@ -80,17 +73,22 @@ create table `category` (
     primary key (`categoryId`)
 );
 
-create table `comment_song` (
-	`commentId` int not null,
-    `userId` int not null,
-    `songId` int not null,
-    primary key (`commentId`, `userId`, `songId`)
+CREATE TABLE `comment_song` (
+   `commentId` int auto_increment,
+   `userId` int not null,
+ `contents` text not null,
+`songId` int not null,
+`dateTime` dateTime not null,
+primary key (`commentId`, `userId`, `songId`)
 );
 
+
 create table `comment_playlist` (
-	`commentId` int not null,
-    `userId` int not null,
-    `playlistId` int not null,
+   `commentId` int auto_increment,
+   `userId` int not null,
+ `contents` text not null,
+`playlistId` int not null,
+`dateTime` dateTime not null,
     primary key (`commentId`, `userId`, `playlistId`)
 );
 
@@ -135,4 +133,5 @@ alter table `song_in_playlist`
     add constraint `song_in_playlist_playlistId` foreign key (`playlistId`) references `playlist`(`playlistId`) on delete cascade;
 
 alter table song add column link varchar(128);
-alter table `user` add column gender tinyint;
+alter table `user` add column gender tinyint ;
+alter table user add column isBlock boolean default true;

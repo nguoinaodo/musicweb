@@ -232,16 +232,46 @@ class Song {
         }
         //Tìm kiếm thông tin trình diễn
     static findPresent(name, callback) {
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'select s.*, a.name as perform from song as s, artist as a, present as p where s.name = ? and s.songId = p.songId and p.artistId = a.artistId';
+                connection.query(query, [name], (err, results) => {
+                    connection.release();
+                    if (err) {
+                        console.log(err);
+                        return callback(err);
+                    }
+                    return callback(null, results);
+                });
+            });
+        }
+        //Tìm kiếm bài hát trong playlist (trả về nhiều kết quả)
+    static findSongPlaylist(playlistName, callback) {
+            pool.getConnection((err, connection) => {
+                if (err) return callback(err);
+                let query = 'select s.* from song as s, song_in_playlist as sp, playlist as p where p.name = ? and p.playlistId = sp.playlistId and sp.songId = s.songId';
+                connection.query(query, [playlistName], (err, results) => {
+                    connection.release();
+                    if (err) return callback(err);
+                    if (!results[0]) return callback(null);
+                    let data = [];
+                    results.forEach(function(item) {
+                        data.push(new Song(item));
+                    });
+                    return callback(null, data);
+                });
+
+            });
+        }
+        //Xóa song (quyền admin)
+    static deleteSongAdmin(songId, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = 'select s.*, a.name as perform from song as s, artist as a, present as p where s.name = ? and s.songId = p.songId and p.artistId = a.artistId';
-            connection.query(query, [name], (err, results) => {
+            let query = "delete from song where songId = ?";
+            connection.query(query, [songId], (err, results) => {
                 connection.release();
-                if (err) {
-                    console.log(err);
-                    return callback(err);
-                }
-                return callback(null, results);
+                if (err) return callback(err);
+                else return callback(null, results);
             });
         });
     }
@@ -257,7 +287,7 @@ class Song {
                     console.log(err);
                     return callback(err);
                 }
-                return callback(null);
+                return callback(null, results);
             });
         });
     }
@@ -294,7 +324,6 @@ class Song {
             });
         });
     }
-
 }
 
 module.exports = Song;

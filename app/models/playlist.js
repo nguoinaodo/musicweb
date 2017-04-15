@@ -1,5 +1,5 @@
 const pool = require(global.__base + 'app/config/database/mysql/pool');
-
+const Song = require(global.__base + 'app/models/Song.js');
 class Playlist {
     constructor(props) {
         this._playlistId = props.playlistId;
@@ -106,6 +106,63 @@ class Playlist {
         });
     }
 
+    static addSong(songId, playlistName, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = "select * from playlist where name = ?";
+            connection.query(query, [playlistName], (err, results) => {
+                if (err) return callback(err);
+                else {
+                    console.log(results);
+                    let info = {
+                        songId: songId,
+                        playlistId: results[0].playlistId,
+                        order: 1
+                    };
+                    let query = "insert into song_in_playlist set ?";
+                    connection.query(query, [info], (err, results) => {
+                        connection.release();
+                        if (err) {
+                            return callback(err);
+                        }
+                        callback(null);
+                    });
+
+                }
+            });
+        });
+
+    }
+    static removeSong(songId, playlistId, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'select * from song_in_playlist where songId = ? and playlistId = ?';
+            connection.query(query, [songId, playlistId], (err, results) => {
+                if (err) return callback(err);
+                if (results) {
+                    let query = "delete from song_in_playlist where songId = ? and playlistId = ?";
+                    connection.query(query, [songId, playlistId], (err, results) => {
+                        console.log(results);
+                        connection.release();
+                        if (err) return callback(err);
+                        return callback(null, results);
+                    });
+                } else return callback(null);
+            });
+
+        });
+    }
+    static deletePlaylist(playlistId, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) return callback(err);
+            let query = 'delete from playlist where playlistId = ?';
+            connection.query(query, [playlistId], (err, results) => {
+                connection.release();
+                if (err) return callback(err);
+                else return callback(null, results);
+            });
+        });
+    }
 
 
 }

@@ -61,7 +61,9 @@ let signup = (req, res) => {
         password: req.body.password,
         displayName: req.body.displayName,
         birthday: moment(req.body.birthday).format('YYYY-MM-DD'),
-        livingIn: req.body.livingIn
+        livingIn: req.body.livingIn,
+        gender: req.body.gender === 'Nam' ? 0 : 1,
+        isBlock: 1
     };
     // Check user exist
     User.findByUsername(info.username, (err, user) => {

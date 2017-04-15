@@ -12,16 +12,21 @@ const getSongByZone = require(global.__base + 'app/controllers/song/getSongByZon
 const getSongByType = require(global.__base + 'app/controllers/song/getSongByType.js');
 const updateListening = require(global.__base + 'app/controllers/song/updateListening.js');
 const updateDownload = require(global.__base + 'app/controllers/song/updateDownload.js');
-
+const getSongPlaylist = require(global.__base + 'app/controllers/song/getPlaylist.js');
+const download = require(global.__base + 'app/controllers/song/download.js');
+const stream = require(global.__base + 'app/controllers/song/stream.js');
 
 const songController = {
     upload: upload,
+    stream: stream,
+    download: download,
     delete: deleteSong,
     getSongId: getSongId,
     getSongAuthor: getSongAuthor,
     getSongByName: getSongByName,
     getSongByArtist: getSongByArtist,
     getPresent: getPresent,
+    getSongPlaylist: getSongPlaylist,
     getSongByCategory: getSongByCategory,
     getSongByZone: getSongByZone,
     getSongByType: getSongByType,

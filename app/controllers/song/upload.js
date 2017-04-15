@@ -4,6 +4,7 @@ const Author = require(global.__base + 'app/models/author.js');
 const Artist = require(global.__base + 'app/models/artist.js');
 
 let upload = (req, res) => {
+    console.log(req.session.cookie);
     //Tìm kiếm tác giả trong csdl
     Author.findByName(req.body.authorName, (err, author) => {
         if (err) {
@@ -31,7 +32,7 @@ let upload = (req, res) => {
                         listen: 0,
                         download: 0,
                         type: (req.file.mimetype === 'audio/mp3' ? 0 : 1),
-                        userId: req.body.userId,
+                        userId: req.session.userId,
                         zoneId: req.body.zoneId,
                         categoryId: req.body.categoryId,
                         authorId: author[0]._authorId

@@ -1,13 +1,13 @@
 'use strict';
 
-const deserialize = require('./deserialize');
-const isAuthenticated = require('./is-authenticated');
+const deserializeUser = require('./deserializeUser');
+const isUser = require('./isUser');
 const log = require('./log');
 
 const middleware = {
-	deserialize: deserialize,
-	isAuthenticated: isAuthenticated,
-	log: log
+    deserializeUser: deserializeUser,
+    isAuthenticated: isUser,
+    log: log
 };
 
 module.exports = middleware;
