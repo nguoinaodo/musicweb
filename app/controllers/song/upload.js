@@ -32,7 +32,7 @@ let upload = (req, res) => {
                         listen: 0,
                         download: 0,
                         type: (req.file.mimetype === 'audio/mp3' ? 0 : 1),
-                        userId: req.session.userId,
+                        userId: req.user.userId,
                         zoneId: req.body.zoneId,
                         categoryId: req.body.categoryId,
                         authorId: author[0]._authorId
@@ -86,7 +86,7 @@ let upload = (req, res) => {
                         download: 0,
                         dateTime: new Date(),
                         type: (req.file.mimetype === 'audio/mp3' ? 0 : 1),
-                        userId: req.body.userId,
+                        userId: req.user.userId,
                         zoneId: req.body.zoneId,
                         categoryId: req.body.categoryId,
                         authorId: newAuthorJSON.authorId

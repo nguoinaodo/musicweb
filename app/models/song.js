@@ -73,6 +73,7 @@ class Song {
             let query = 'select * from artist where name = ?';
             connection.query(query, [name], (err, results) => {
                 if (err) {
+                    connection.release();
                     console.log(err);
                     return callback(err);
                 } else {
@@ -322,6 +323,17 @@ class Song {
                     callback(null);
                 }
             });
+        });
+    }
+    static getRankTable(type, callback) {
+        let query = "select * from song where type = ? order by listen DESC";
+        pool.query(query, [type], (err, results) => {
+            if (err) return callback(err);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Song(item));
+            });
+            callback(null, data);
         });
     }
 }

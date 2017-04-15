@@ -90,17 +90,82 @@ class Admin {
 
     //Tìm kiếm bằng email chỉ trả về 1 kq
     static findByEmail(email, callback) {
-        pool.getConnection((err, connection) => {
-            if (err) return callback(err);
-            let query = 'select * from `admin` where username = ?';
-            connection.query(query, [email], (err, results) => {
-                connection.release();
+            pool.getConnection((err, connection) => {
                 if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let info = Object.assign({}, results[0], { encryptedPassword: results[0].password });
-                let admin = new Admin(info);
-                return callback(null, admin);
+                let query = 'select * from `admin` where username = ?';
+                connection.query(query, [email], (err, results) => {
+                    connection.release();
+                    if (err) return callback(err);
+                    if (!results[0]) return callback(null, null);
+                    let info = Object.assign({}, results[0], { encryptedPassword: results[0].password });
+                    let admin = new Admin(info);
+                    return callback(null, admin);
+                });
             });
+        }
+        //Block User
+    static Block(userId, callback) {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                connection.release();
+                return callback(err);
+            }
+            let query = 'select isBlock from user where userId = ?';
+            connection.query(query, [userId], (err, user) => {
+                if (err) {
+                    connection.release();
+                    return callback(err);
+                }
+                if (user[0].isBlock === 0) {
+                    console.log("hihi");
+                    let query = 'update user set isBlock = 1 where userId = ? ';
+                    connection.query(query, [userId], (err, results) => {
+                        connection.release();
+                        if (err) return callback(err);
+                    });
+                } else {
+                    let query = 'update user set isBlock = 0 where userId = ? ';
+                    connection.query(query, [userId], (err, results) => {
+                        connection.release();
+                        if (err) return callback(err);
+                    });
+                }
+                return callback(null);
+            });
+        });
+    }
+
+    static getUser(callback) {
+        let query = 'select * from user';
+        pool.query(query, [], (err, results) => {
+            if (err) {
+                console.log(err);
+                return callback(err);
+            } else {
+                return callback(null, results);
+            }
+        });
+    }
+    static getListen(callback) {
+        let query = 'select * from song order by song.listen desc';
+        pool.query(query, [], (err, results) => {
+            if (err) {
+                console.log(err);
+                return callback(err);
+            } else {
+                return callback(null, results);
+            }
+        });
+    }
+    static getDownload(callback) {
+        let query = 'select * from song order by song.download desc';
+        pool.query(query, [], (err, results) => {
+            if (err) {
+                console.log(err);
+                return callback(err);
+            } else {
+                return callback(null, results);
+            }
         });
     }
 

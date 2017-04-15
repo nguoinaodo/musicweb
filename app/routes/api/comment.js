@@ -22,6 +22,6 @@ router.get('/playlist/:playlistId', commentController.cmtPlaylist);
 router.delete('/song/remove', isAuthenticated, deserialize, commentController.rmSong);
 
 //Xóa cmt trong playlist
-router.delete('/playlist/delete', isAuthenticated, deserialize, commentController.rmPlaylist);
+router.delete('/playlist/remove', isAuthenticated, deserialize, commentController.rmPlaylist);
 
 module.exports = router;

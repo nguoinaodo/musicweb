@@ -39,10 +39,14 @@ app.use('/song', song);
 app.get('/', (req, res) => {
     res.sendFile(global.__base + 'app/routes/api/index.html');
 });
+app.get('/u', (req, res) => {
+    res.sendFile(global.__base + 'app/routes/api/index1.html');
+});
 app.get('/hi', isAuthenticated, deserialize, (req, res) => {
     res.sendFile(global.__base + 'app/routes/api/delete.html');
 });
-app.get('/he', isAuthenticated, deserialize, (req, res) => {
+app.get('/he', isUser, deserializeUser, (req, res) => {
+    console.log(req.user.userId);
     res.sendFile(global.__base + 'app/routes/api/song.html');
 });
 app.get('/cmt', isAuthenticated, deserialize, (req, res) => {
@@ -50,6 +54,10 @@ app.get('/cmt', isAuthenticated, deserialize, (req, res) => {
 });
 app.get('/crpl', isAuthenticated, deserialize, (req, res) => {
     res.sendFile(global.__base + 'app/routes/api/playlist.html');
+});
+app.get('/bl', isAdmin, deserializeAdmin, (req, res) => {
+    res.sendFile(global.__base + 'app/routes/api/block.html');
+
 });
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

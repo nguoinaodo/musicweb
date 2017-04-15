@@ -4,10 +4,10 @@ const fs = require('fs');
 let deleteSong = (req, res) => {
 
     let info = {
-        userId: req.session.userId,
+        userId: req.user !== undefined ? req.user.userId : null,
         songId: req.body.songId
     };
-    if (info.userId === null && req.session.adminId === null) {
+    if (info.userId === null && req.admin.adminId === null) {
         return res.status(403).json({ errCode: -3, msg: 'Access is Denied' });
     }
     Song.findById(info.songId, (err, song) => {
@@ -18,14 +18,14 @@ let deleteSong = (req, res) => {
 
         else {
             var path = global.__base + '/' + song.link;
-            if (req.session.adminId !== null && req.session.adminId !== undefined) {
+            if (req.admin.adminId !== null && req.admin.adminId !== undefined) {
                 console.log(req.session);
                 Song.deleteSongAdmin(info.songId, (err, info) => {
                     if (err) return res.status(500).json({ errCode: 500, msg: 'Internal error' });
                     if (info.affectedRows === 0) return res.status(404).json({ errCode: -4, msg: "Not found" });
                     else {
-                        return res.status(200).json({ errCode: 0, msg: "Success" });
                         fs.unlinkSync(path);
+                        return res.status(200).json({ errCode: 0, msg: "Success" });
                     }
                 });
             } else {

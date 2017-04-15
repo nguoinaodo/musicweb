@@ -74,4 +74,6 @@ router.put('/update/download', songController.updateDownload);
 //Download bài hát
 router.get('/download/:id', songController.download);
 
+//Get bảng xếp hạng
+router.get('/rank/:type', songController.rank);
 module.exports = router;
