@@ -44,15 +44,20 @@ class Comments {
     //Tìm kiếm cmt trong bài hát, trả về nhiều kết quả, là comment và user name của người comment tham số đầu vào là tên bài hát
 
     static findCmtSong(songId, callback) {
-        pool.getConnection((err, connection) => {
-            if (err) return callback(err);
             let query = 'select u.username, cs.* from comment_song as cs, user as u where cs.userId = u.userId and cs.songId = ? order by cs.dateTime';
-            connection.query(query, [songId], (err, results) => {
-                connection.release();
+            pool.query(query, [songId], (err, results) => {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null);
                 else return callback(null, results);
             });
+        }
+        //Xóa cmt bằng ID , chỉ user cmt mới có thể xóa
+    static rmCmt(cmtId, userId, callback) {
+        let query = 'delete from comment_song where commentId = ? and userId = ?';
+        pool.query(query, [cmtId, userId], (err, result) => {
+            console.log(result);
+            if (err) return callback(err);
+            else return callback(null, result);
         });
     }
 }

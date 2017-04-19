@@ -53,7 +53,7 @@ let login = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
         if (user) {
-            if (user.isBlock === 0) {
+            if (user.isBlock === 1) {
                 return res.status(413).json({ errCode: -3, msg: 'Access Denied' });
             }
             if (!user.comparePassword(password)) {

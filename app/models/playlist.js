@@ -53,57 +53,46 @@ class Playlist {
     //Tìm theo tên trả về nhiều kết quả
 
     static findByName(name, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'select * from playlist where name = ?';
+        pool.query(query, [name], (err, results) => {
             if (err) return callback(err);
-            let query = 'select * from playlist where name = ?';
-            connection.query(query, [name], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let data = [];
-                results.forEach(function(item) {
-                    data.push(new Playlist(item));
-                });
-                callback(null, data);
+            if (!results[0]) return callback(null, null);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Playlist(item));
             });
+            callback(null, data);
         });
     }
 
     // Tìm kiếm bằng type, có thể trả về nhiều kết quả
     static findByType(type, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'select * from playlist where type = ?';
+        pool.query(query, [type], (err, resutls) => {
             if (err) return callback(err);
-            let query = 'select * from playlist where type = ?';
-            connection.query(query, [type], (err, resutls) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let data = [];
-                results.forEach(function(item) {
-                    data.push(new Playlist(item));
-                });
-                callback(null, data);
+            if (!results[0]) return callback(null, null);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Playlist(item));
             });
+            callback(null, data);
         });
     }
 
     //Tìm kiếm bằng ID người dùng sở hữu playlist, trả về nhiều kết quả
 
     static findByUserId(id, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'select * from playlist where userId = ?';
+        pool.query(query, [id], (err, results) => {
             if (err) return callback(err);
-            let query = 'select * from playlist where userId = ?';
-            connection.query(query, [id], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let data = [];
-                results.forEach(function(item) {
-                    data.push(new Playlist(item));
-                });
-                callback(null, data);
+            if (!results[0]) return callback(null, null);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Playlist(item));
             });
+            callback(null, data);
         });
+
     }
 
     static addSong(songId, playlistName, callback) {
@@ -153,15 +142,12 @@ class Playlist {
         });
     }
     static deletePlaylist(playlistId, callback) {
-        pool.getConnection((err, connection) => {
+        let query = 'delete from playlist where playlistId = ?';
+        pool.query(query, [playlistId], (err, results) => {
             if (err) return callback(err);
-            let query = 'delete from playlist where playlistId = ?';
-            connection.query(query, [playlistId], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                else return callback(null, results);
-            });
+            else return callback(null, results);
         });
+
     }
 
 

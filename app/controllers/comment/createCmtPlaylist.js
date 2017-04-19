@@ -3,7 +3,7 @@ const CommentPlaylist = require(global.__base + 'app/models/cmtPlaylist.js');
 
 let createCmtPlaylist = (req, res) => {
     let info = {
-        userId: req.session.userId,
+        userId: req.user.userId,
         playlistId: req.body.playlistId,
         contents: req.body.contents,
         dateTime: new Date()

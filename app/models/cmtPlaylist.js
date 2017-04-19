@@ -43,15 +43,20 @@ class Comments {
 
     // Tìm kiếm cmt trong playlist, trả về nhiều kết quả, là nội dung và username người cmt
     static findCmtPlaylist(playlistId, callback) {
-        pool.getConnection((err, connection) => {
-            if (err) return callback(err);
             let query = 'select cp.*, u.username from comment_playlist as cp, user as u where  u.userId = cp.userId and cp.playlistId = ? order by cp.dateTime';
-            connection.query(query, [playlistId], (err, results) => {
-                connection.release();
+            pool.query(query, [playlistId], (err, results) => {
                 if (err) return callback(err);
                 if (!results[0]) return callback(null, null);
                 return callback(null, results);
             });
+
+        }
+        //Xóa cmt chỉ user cmt mới có thể xóa
+    static rmCmt(cmtId, userId, callback) {
+        let query = 'delete from comment_playlist where commentId = ? and userId = ?';
+        pool.query(query, [cmtId, userId], (err, result) => {
+            if (err) return callback(err);
+            else return callback(null, result);
         });
     }
 }

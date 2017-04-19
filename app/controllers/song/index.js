@@ -15,12 +15,15 @@ const updateDownload = require(global.__base + 'app/controllers/song/updateDownl
 const getSongPlaylist = require(global.__base + 'app/controllers/song/getPlaylist.js');
 const download = require(global.__base + 'app/controllers/song/download.js');
 const stream = require(global.__base + 'app/controllers/song/stream.js');
-
+const rank = require(global.__base + 'app/controllers/song/getRank.js');
+const findAll = require(global.__base + 'app/controllers/song/findAll.js');
 const songController = {
     upload: upload,
     stream: stream,
     download: download,
     delete: deleteSong,
+    rank: rank,
+    findAll: findAll,
     getSongId: getSongId,
     getSongAuthor: getSongAuthor,
     getSongByName: getSongByName,

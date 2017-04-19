@@ -18,7 +18,7 @@ let createPlaylist = (req, res) => {
                 type: 1,
                 isVerify: true,
                 dateTime: new Date(),
-                userId: req.session.userId
+                userId: req.user.userId
             }
             let newPlaylist = new Playlist(info);
             newPlaylist.save((err) => {

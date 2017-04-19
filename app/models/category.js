@@ -34,20 +34,17 @@ class Category {
         }
         // Tìm kiếm theo tên, trả về nhiều kết quả
     static findbyName(name, callback) {
-        pool.getConnection((err, connection) => {
-            if (err) { return callback(err); }
-            let query = 'select * from category where name = ?';
-            connection.query(query, [name], (err, results) => {
-                connection.release();
-                if (err) return callback(err);
-                if (!results[0]) return callback(null, null);
-                let data = [];
-                results.forEach(function(item) {
-                    data.push(new Category(item));
-                });
-                callback(null, data);
+        let query = 'select * from category where name = ?';
+        pool.query(query, [name], (err, results) => {
+            if (err) return callback(err);
+            if (!results[0]) return callback(null, null);
+            let data = [];
+            results.forEach(function(item) {
+                data.push(new Category(item));
             });
+            callback(null, data);
         });
+
     }
 }
 module.exports = Category;

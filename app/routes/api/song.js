@@ -28,7 +28,7 @@ router.post('/upload', deserializeUser, isUser, upload.single("file"), songContr
 
 
 //Xóa một bài hát, chỉ có user hoặc admin mới có quyền
-router.post('/delete', deserialize, isAuthenticated, songController.delete);
+router.delete('/delete', deserialize, isAuthenticated, songController.delete);
 
 
 //Trả về một bài hát bằng ID
@@ -73,5 +73,11 @@ router.put('/update/download', songController.updateDownload);
 
 //Download bài hát
 router.get('/download/:id', songController.download);
+
+//Get bảng xếp hạng
+router.get('/rank/:type', songController.rank);
+
+//Get all
+router.post('/find', songController.findAll);
 
 module.exports = router;
