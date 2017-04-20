@@ -9,14 +9,14 @@ let createPlaylist = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: "Internal error" });
         }
         if (playlist) {
-            return res.status(400).json({ errCode: -1, msg: "Playlist already exists" });
+            return res.status(400).json({ errCode: -2, msg: "Playlist already exists" });
         } else {
 
             let info = {
                 name: req.body.name,
                 description: req.body.description,
-                type: 1,
-                isVerify: true,
+                type: req.body.type,
+                isVerify: req.body.type === 0 ? true : false,
                 dateTime: new Date(),
                 userId: req.user.userId
             }

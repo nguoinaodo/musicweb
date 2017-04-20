@@ -8,7 +8,7 @@ let upload = (req, res) => {
     // Check file trong cơ sở dữ liệu:
     Song.findFile(req.file.path, (err, song) => {
         if (err) return res.status(500).json({ errCode: 500, msg: 'Internal error' });
-        if (song) return res.status(400).json({ errCode: -1, msg: 'File already exist' });
+        if (song) return res.status(400).json({ errCode: -2, msg: 'File already exist' });
         else {
             //Tìm kiếm tác giả trong database
             Author.findByName(req.body.author, (err, author) => {
@@ -18,7 +18,7 @@ let upload = (req, res) => {
                 }
                 // Sai định dạng file
                 if (req.file.mimetype !== 'audio/mp3' && req.file.mimetype !== 'video/mp4') {
-                    res.status(415).json({ errCode: 415, msg: 'Unsupported Media Type ' });
+                    res.status(415).json({ errCode: -7, msg: 'Unsupported Media Type ' });
                 }
                 //Nếu có tác giả thì kiểm tra ca sĩ
                 if (author) {

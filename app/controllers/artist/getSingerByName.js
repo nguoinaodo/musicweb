@@ -12,8 +12,8 @@ let getSingerName = (req, res) => {
         }
         if (!artist) {
             return res.status(404).json({
-                errCode: 404,
-                msg: 'Internal error'
+                errCode: -3,
+                msg: "Not found"
             });
         } else {
             let resData = [];

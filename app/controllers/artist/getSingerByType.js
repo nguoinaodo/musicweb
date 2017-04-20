@@ -11,7 +11,7 @@ let getSingerType = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
         if (!artist) {
-            return res.status(404).json({ errCode: 404, msg: 'Not found' });
+            return res.status(404).json({ errCode: -3, msg: 'Not found' });
         } else {
             let resData = [];
             artist.forEach(function(item) {
