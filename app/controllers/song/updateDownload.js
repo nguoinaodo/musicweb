@@ -4,7 +4,7 @@ const Song = require(global.__base + 'app/models/song.js');
 let updateDownload = (req, res) => {
     if (parseInt(req.body.status) === 1) {
         if (!req.body.songId) {
-            return res.status(404).json({ errCode: 404, msg: 'Not found' });
+            return res.status(404).json({ errCode: -3, msg: 'Not found' });
         } else {
             Song.updateDownload(req.body.songId, (err) => {
                 if (err) {

@@ -29,7 +29,7 @@ let signup = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
         if (admin) {
-            return res.status(400).json({ errCode: 400, msg: 'Admin already exists' });
+            return res.status(400).json({ errCode: -2, msg: 'Admin already exists' });
         } else {
             let newAdmin = new Admin(info);
             newAdmin.save((err) => {

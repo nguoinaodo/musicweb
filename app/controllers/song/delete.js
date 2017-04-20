@@ -8,13 +8,13 @@ let deleteSong = (req, res) => {
         songId: req.body.songId
     };
     if ((info.userId === null && req.admin === null) || (info.userId === undefined && req.admin === undefined)) {
-        return res.status(403).json({ errCode: -3, msg: 'Access is Denied' });
+        return res.status(403).json({ errCode: -5, msg: 'Access is Denied' });
     }
     Song.findById(info.songId, (err, song) => {
         if (err) {
             return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
-        if (!song) return res.status(404).json({ errCode: 404, msg: 'Not Found' });
+        if (!song) return res.status(404).json({ errCode: -3, msg: 'Not Found' });
 
         else {
             var path = global.__base + '/' + song.link;
@@ -22,7 +22,7 @@ let deleteSong = (req, res) => {
                 console.log(req.session);
                 Song.deleteSongAdmin(info.songId, (err, info) => {
                     if (err) return res.status(500).json({ errCode: 500, msg: 'Internal error' });
-                    if (info.affectedRows === 0) return res.status(404).json({ errCode: -4, msg: "Not found" });
+                    if (info.affectedRows === 0) return res.status(404).json({ errCode: -3, msg: "Not found" });
                     else {
                         fs.unlinkSync(path);
                         return res.status(200).json({ errCode: 0, msg: "Success" });

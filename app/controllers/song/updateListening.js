@@ -3,7 +3,7 @@ const Song = require(global.__base + 'app/models/song.js');
 
 let updateListening = (req, res) => {
     if (!req.body.songId) {
-        return res.status(404).json({ errCode: 404, msg: 'Not found' });
+        return res.status(404).json({ errCode: -3, msg: 'Not found' });
     } else {
         Song.updateListening(req.body.songId, (err) => {
             if (err) {

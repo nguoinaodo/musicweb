@@ -7,7 +7,7 @@ let isAuthenticated = (req, res, next) => {
     if (adminId === null || adminId === undefined) {
         req.session.destroy();
 
-        return res.status(400).json({ errCode: -4, msg: 'Not admin' });
+        return res.status(400).json({ errCode: -4, msg: 'Admin not login yet' });
     }
 
     next();

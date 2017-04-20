@@ -10,7 +10,7 @@ let getSongName = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: 'Interal error' });
         }
         if (!song) {
-            return res.status(404).json({ errCode: 404, msg: 'Not found' });
+            return res.status(404).json({ errCode: -3, msg: 'Not found' });
         } else {
             let resData = [];
             song.forEach(function(item) {

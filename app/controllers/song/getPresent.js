@@ -9,7 +9,7 @@ let present = (req, res) => {
             return res.status(500).json({ errCode: 500, msg: 'Internal error' });
         }
         if (!present) {
-            return res.status(404).json({ errCode: 404, msg: 'Not found' });
+            return res.status(404).json({ errCode: -3, msg: 'Not found' });
         } else {
             console.log(present);
             return res.status(200).json({ errCode: 0, msg: 'Success', data: present });

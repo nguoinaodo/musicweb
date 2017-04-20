@@ -1,5 +1,5 @@
 const pool = require(global.__base + 'app/config/database/mysql/pool');
-const Song = require(global.__base + 'app/models/Song.js');
+const Song = require(global.__base + 'app/models/song.js');
 class Playlist {
     constructor(props) {
         this._playlistId = props.playlistId;
@@ -95,11 +95,11 @@ class Playlist {
 
     }
 
-    static addSong(songId, playlistName, callback) {
+    static addSong(songId, playlistName, userId, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = "select * from playlist where name = ?";
-            connection.query(query, [playlistName], (err, results) => {
+            let query = "select * from playlist where name = ? and userId = ?";
+            connection.query(query, [playlistName, userId], (err, results) => {
                 if (err) return callback(err);
                 else {
                     console.log(results);
