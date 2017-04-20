@@ -8,6 +8,6 @@ const isAdmin = require(global.__base + 'app/controllers/middleware/isAdmin.js')
 
 router.post('/signup', adminController.signup);
 router.post('/login', adminController.login);
-router.get('/logout', deserializeAdmin, isAdmin, adminController.logout);
+router.get('/logout', isAdmin, adminController.logout);
 
 module.exports = router;

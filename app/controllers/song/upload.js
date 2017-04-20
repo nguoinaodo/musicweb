@@ -52,12 +52,6 @@ let upload = (req, res) => {
 
                         })
                     });
-
-
-
-
-
-
                 }
                 //Nếu không tồn tại ca sĩ thì báo 404, yêu cầu người dùng tạo ca sĩ 
                 else return res.status(404).json({ errCode: 404, msg: ' Not found singer' });
@@ -107,14 +101,6 @@ let upload = (req, res) => {
                 });
             });
         }
-
-
-
-
-
-
-
-
     });
 
 

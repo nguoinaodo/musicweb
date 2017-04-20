@@ -7,44 +7,29 @@ class SecondNavbar extends React.Component {
       <div className="SecondNavbar" id="second-navbar">
         <Navbar>
           <Nav>
-            <NavItem eventKey={1} href="#" >Trang chu</NavItem>
-            <NavItem eventKey={2} href="#" >Kham pha</NavItem>
-            <NavDropdown eventKey={3} title="Bai hat">
-              <MenuItem eventKey={3.1}>Action</MenuItem>
-              <MenuItem eventKey={3.2}>Another action</MenuItem>
-              <MenuItem eventKey={3.3}>Something else here</MenuItem>
+            <NavItem href="#/home" >Trang chu</NavItem>
+            <NavItem href="#/song">Bai hat</NavItem>
+            <NavDropdown title="Playlist">
+              <MenuItem>Action</MenuItem>
+              <MenuItem>Another action</MenuItem>
+              <MenuItem>Something else here</MenuItem>
               <MenuItem divider />
-              <MenuItem eventKey={3.3}>Separated link</MenuItem>
+              <MenuItem>Separated link</MenuItem>
             </NavDropdown>
-            <NavDropdown eventKey={4} title="Playlist">
-              <MenuItem eventKey={4.1}>Action</MenuItem>
-              <MenuItem eventKey={4.2}>Another action</MenuItem>
-              <MenuItem eventKey={4.3}>Something else here</MenuItem>
+            <NavItem href="#/video">Video</NavItem>
+            <NavDropdown title="BXH">
+              <MenuItem href="#/top/us-uk">US-UK</MenuItem>
+              <MenuItem href="#/top/vn">VN</MenuItem>
+              <MenuItem href="#/top/kr">Korea</MenuItem>
+            </NavDropdown>
+            <NavDropdown title="Chu de">
+              <MenuItem>Action</MenuItem>
+              <MenuItem>Another action</MenuItem>
+              <MenuItem>Something else here</MenuItem>
               <MenuItem divider />
-              <MenuItem eventKey={4.3}>Separated link</MenuItem>
+              <MenuItem>Separated link</MenuItem>
             </NavDropdown>
-            <NavDropdown eventKey={5} title="Video">
-              <MenuItem eventKey={5.1}>Action</MenuItem>
-              <MenuItem eventKey={5.2}>Another action</MenuItem>
-              <MenuItem eventKey={5.3}>Something else here</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={5.3}>Separated link</MenuItem>
-            </NavDropdown>
-            <NavDropdown eventKey={6} title="BXH">
-              <MenuItem eventKey={6.1}>Action</MenuItem>
-              <MenuItem eventKey={6.2}>Another action</MenuItem>
-              <MenuItem eventKey={6.3}>Something else here</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={6.3}>Separated link</MenuItem>
-            </NavDropdown>
-            <NavDropdown eventKey={7} title="Chu de">
-              <MenuItem eventKey={7.1}>Action</MenuItem>
-              <MenuItem eventKey={7.2}>Another action</MenuItem>
-              <MenuItem eventKey={7.3}>Something else here</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={7.3}>Separated link</MenuItem>
-            </NavDropdown>
-            <NavItem eventKey={8} href="#" >Nghe si</NavItem>
+            <NavItem href="#/artist" >Nghe si</NavItem>
           </Nav>
         </Navbar>
       </div>

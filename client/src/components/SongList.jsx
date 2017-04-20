@@ -9,17 +9,8 @@ class SongList extends React.Component {
 				<div>List nhac</div>
 				<SongItem />
 				<SongItem />
-				<Pagination
-	        prev
-	        next
-	        first
-	        last
-	        ellipsis
-	        boundaryLinks
-	        items={20}
-	        maxButtons={5}
-	        activePage={1}
-	        onSelect={this.handleSelect} />
+				<Pagination prev next first last ellipsis boundaryLinks items={20} maxButtons={5} activePage={1} 
+						onSelect={this.handleSelect} />
 			</div>
 		);
 	}

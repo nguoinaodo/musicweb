@@ -19,12 +19,12 @@ const deserialize = require(global.__base + 'app/controllers/middleware/deserial
 // Body parser
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(bodyParser.json({ limit: '100mb' }));
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 604800 }
-}));
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { maxAge: 1000 * 604800 }
+// }));
 
 // Log
 const log = require(global.__base + 'app/controllers/middleware').log;

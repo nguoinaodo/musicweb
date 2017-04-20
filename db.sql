@@ -115,12 +115,10 @@ alter table `playlist`
     add constraint `playlist_userId` foreign key (`userId`) references `user`(`userId`) on delete cascade;
 
 alter table `comment_song`
-    add constraint `comment_song_commentId` foreign key (`commentId`) references `comment`(`commentId`) on delete cascade,
     add constraint `comment_song_userId` foreign key (`userId`) references `user`(`userId`) on delete cascade,
     add constraint `comment_song_songId` foreign key (`songId`) references `song`(`songId`) on delete cascade;
 
 alter table `comment_playlist`
-    add constraint `comment_playlist_commentId` foreign key (`commentId`) references `comment`(`commentId`) on delete cascade,
     add constraint `comment_playlist_userId` foreign key (`userId`) references `user`(`userId`) on delete cascade,
     add constraint `comment_playlist_playlistId` foreign key (`playlistId`) references `playlist`(`playlistId`) on delete cascade;
 
@@ -132,12 +130,6 @@ alter table `song_in_playlist`
     add constraint `song_in_playlist_songId` foreign key (`songId`) references `song`(`songId`) on delete cascade,
     add constraint `song_in_playlist_playlistId` foreign key (`playlistId`) references `playlist`(`playlistId`) on delete cascade;
 
-<<<<<<< HEAD
---
-alter table `user` add column gender tinyint;
-alter table song add column link varchar(128);
-=======
 alter table song add column link varchar(128);
 alter table `user` add column gender tinyint ;
 alter table user add column isBlock boolean default true;
->>>>>>> 6186319277a316445a0f31a7b17e2f9334d4c3f1

@@ -6,7 +6,7 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className="Header">
-				<TopNavbar />
+				<TopNavbar doLogout={this.props.doLogout}/>
 				<SecondNavbar />
 			</div>
 		);

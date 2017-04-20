@@ -66,7 +66,7 @@ let login = (req, res) => {
                     return res.status(400).json({ errCode: -4, msg: 'Password mismatch' });
 
                 }
-                admin.toJSOn((err, adminJSON) => {
+                admin.toJSON((err, adminJSON) => {
                     if (err) {
                         console.log(err);
                         return res.status(500).json({

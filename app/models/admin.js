@@ -58,7 +58,7 @@ class Admin {
     static findById(id, callback) {
         pool.getConnection((err, connection) => {
             if (err) return callback(err);
-            let query = 'select * from `admin` where adminId=?';
+            let query = 'select * from `admin` where adminId = ?';
             connection.query(query, [id], (err, results) => {
                 connection.release();
                 if (err) return callback(err);
@@ -67,6 +67,7 @@ class Admin {
                     encryptedPassword: results[0].password
                 });
                 let admin = new Admin(info);
+                console.log(admin)
                 return callback(null, admin);
             });
         });

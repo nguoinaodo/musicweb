@@ -1,5 +1,5 @@
 const pool = require(global.__base + 'app/config/database/mysql/pool');
-const Song = require(global.__base + 'app/models/Song.js');
+
 class Playlist {
     constructor(props) {
         this._playlistId = props.playlistId;

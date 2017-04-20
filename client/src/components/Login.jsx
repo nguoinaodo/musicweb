@@ -6,35 +6,55 @@ class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: false
+			username: '',
+			password: ''
 		};
+		this.submit = this.submit.bind(this);
+		this.doLogin = this.doLogin.bind(this);
 		this.close = this.close.bind(this);
 	}
 	
+	submit(e) {
+		e.preventDefault();
+		this.doLogin();
+	}
+
+	doLogin() {
+		let info = {
+			username: this.state.username,
+			password: this.state.password
+		};
+		this.props.setInfo(info);
+		this.props.doLogin();
+	}
+
 	close() {
-		this.setState({
-			show: false
-		});
-		console.log(this.usernameInput);
-		console.log(this.passwordInput);
+		this.props.doClose();
 	}
 
 	render() {
 		return (
 			<div className="Login">
 				<div>Login</div>
-				<Modal show={this.state.show}>
-					<Modal.Header>Login header</Modal.Header>
+				<div>{this.props.status}</div>
+				<Modal show={this.props.show}>
+					<Modal.Header>Login</Modal.Header>
 					<Modal.Body>
 						<form onSubmit={this.submit} id="login-form">
 							<FormGroup>
 								<ControlLabel>Ten dang nhap</ControlLabel>
-								<FormControl type="text" placeholder="" ref={(input) => { this.usernameInput = input; }} />
+								<FormControl type="text" placeholder="Enter username" ref={(input) => { this.usernameInput = input; }} 
+										required onChange={(e) => this.setState({
+											username: e.target.value
+										})} value={this.state.username} />
 								<br/>
 								<ControlLabel>Mat khau</ControlLabel>
-								<FormControl type="password" placeholder="" ref={(input) => { this.passwordInput = input; }} />
+								<FormControl type="password" placeholder="Enter password" ref={(input) => { this.passwordInput = input; }} 
+										required onChange={(e) => this.setState({
+											password: e.target.value
+										})} value={this.state.password} />
 								<br/>
-								<Button>Login</Button>
+								<Button type="submit">Login</Button>
 							</FormGroup>
 						</form>
 					</Modal.Body>

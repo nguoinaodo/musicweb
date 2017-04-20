@@ -12,7 +12,13 @@
     "react-dom": "^15.4.2",
     "react-fontawesome": "^1.5.0",
     "semantic-ui-css": "^2.2.9",
-    "semantic-ui-react": "^0.67.0"
+    "semantic-ui-react": "^0.67.0",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.8.1",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,5 +26,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "sass": "node-sass src/style/scss -o src/style/css"
-  }
+  },
+  "proxy": "http://127.0.0.1:8080"
 }

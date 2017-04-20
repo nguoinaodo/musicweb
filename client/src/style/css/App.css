@@ -1,0 +1,231 @@
+@font-face {
+  font-family: 'Main font';
+  src: url("./Sansita-Regular.otf"); }
+
+.App {
+  margin: 0;
+  font-family: 'Sansita';
+  color: #555;
+  font-size: 15px;
+  padding: 10px 30px; }
+  .App .Header .TopNavbar .navbar {
+    margin-bottom: 0px; }
+  .App .Header .SecondNavbar .navbar {
+    background-image: linear-gradient(to bottom, #fff 0%, #fff 100%); }
+  .App .SongPlayer {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 60%;
+    min-height: 200px;
+    padding-left: 5px; }
+    .App .SongPlayer audio {
+      display: none; }
+    .App .SongPlayer .SongPlayer_MainScreen .SongPlayer_MainScreen_Cover {
+      position: relative;
+      float: left;
+      width: 30%; }
+      .App .SongPlayer .SongPlayer_MainScreen .SongPlayer_MainScreen_Cover img {
+        width: 100%;
+        min-height: 150px; }
+    .App .SongPlayer .SongPlayer_MainScreen .SongPlayer_MainScreen_Lyric {
+      position: relative;
+      float: left;
+      width: 60%;
+      padding: 1%;
+      font-family: 'sans-serif';
+      font-size: 20px;
+      text-align: center;
+      color: #333; }
+    .App .SongPlayer .SongPlayer_MainScreen:after {
+      content: '';
+      display: block;
+      clear: both; }
+    .App .SongPlayer .SongPlayer_Playing .SongName {
+      color: #333; }
+    .App .SongPlayer .SongPlayer_Playing .Artist {
+      color: #999;
+      font-size: 13px; }
+  .App .SongPlayer:after {
+    content: '';
+    display: block;
+    clear: both; }
+  .App .SongPlayer_Control {
+    min-height: 50px;
+    position: relative; }
+    .App .SongPlayer_Control div {
+      position: relative;
+      display: block;
+      padding: 6px 8px; }
+    .App .SongPlayer_Control div:hover {
+      color: #337ab7;
+      cursor: pointer; }
+    .App .SongPlayer_Control .SongPlayer_Control_Progress .SongPlayer_Control_ProgressFull {
+      position: absolute;
+      top: 0;
+      left: 0%;
+      width: 100%;
+      z-index: 1;
+      background-color: slategray;
+      padding: 0;
+      height: 7px; }
+    .App .SongPlayer_Control .SongPlayer_Control_Progress .SongPlayer_Control_ProgressPass {
+      position: absolute;
+      top: 0;
+      left: 0%;
+      width: 30%;
+      z-index: 2;
+      background-color: dodgerblue;
+      padding: 0;
+      height: 7px; }
+    .App .SongPlayer_Control .SongPlayer_Control_Progress .SongPlayer_Control_ProgressHolder {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      bottom: 4px;
+      padding: 0;
+      left: 30%;
+      background: #fff;
+      z-index: 3;
+      border-radius: 7px;
+      -moz-border-radius: 7px;
+      -webkit-border-radius: 7px;
+      margin-bottom: -3px;
+      overflow: hidden;
+      margin-left: -7px;
+      -webkit-transition: opacity 0.2s linear, height 0.2s linear, margin-bottom 0.2s linear;
+      -moz-transition: opacity 0.2s linear, height 0.2s linear, margin-bottom 0.2s linear;
+      transition: opacity 0.2s linear, height 0.2s linear, margin-bottom 0.2s linear;
+      opacity: 0.8;
+      background: -webkit-linear-gradient(to bottom, #FFFFFF 0%, #ECECEC 100%);
+      background: -moz-linear-gradient(to bottom, #FFFFFF 0%, #ECECEC 100%);
+      background: -o-linear-gradient(to bottom, #FFFFFF 0%, #ECECEC 100%);
+      background: -ms-linear-gradient(to bottom, #FFFFFF 0%, #ECECEC 100%);
+      background: linear-gradient(to bottom, #FFFFFF 0%, #ECECEC 100%); }
+    .App .SongPlayer_Control .SongPlayer_Control_Progress .SongPlayer_Control_ProgressHolder:hover {
+      opacity: 1; }
+    .App .SongPlayer_Control .SongPlayer_Control_Prev {
+      float: left; }
+    .App .SongPlayer_Control .SongPlayer_Control_Play {
+      float: left; }
+    .App .SongPlayer_Control .SongPlayer_Control_Next {
+      float: left; }
+    .App .SongPlayer_Control .SongPlayer_Control_Time {
+      float: left;
+      font-size: 13px;
+      color: #999; }
+    .App .SongPlayer_Control .SongPlayer_Control_Volume {
+      float: right; }
+    .App .SongPlayer_Control .SongPlayer_Control_Random {
+      float: right; }
+    .App .SongPlayer_Control .SongPlayer_Control_Download {
+      float: right; }
+  .App .VideoPlayer {
+    position: relative;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding-left: 5px; }
+    .App .VideoPlayer video {
+      position: relative;
+      width: 100%; }
+  .App .MVCover {
+    position: relative;
+    width: 190px;
+    min-height: 200px;
+    border: 1px solid #ccc;
+    padding: 5px; }
+    .App .MVCover img {
+      width: 100%;
+      min-height: 150px; }
+    .App .MVCover .MVCover_Title {
+      font-size: 16px;
+      color: #333;
+      padding-top: 5px; }
+    .App .MVCover .MVCover_Artist {
+      font-size: 13px;
+      color: #999;
+      padding-top: 5px; }
+  .App .SongList {
+    position: relative;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 0px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075); }
+  .App .SongItem:after {
+    content: '';
+    display: block;
+    clear: both; }
+  .App .SongItem {
+    border-radius: 3px;
+    margin: 0px 0px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075); }
+    .App .SongItem a {
+      text-decoration: none;
+      color: #333; }
+    .App .SongItem a:hover {
+      text-decoration: none;
+      color: #337ab7; }
+    .App .SongItem ul {
+      position: relative;
+      width: 90%;
+      padding: 4px 0px;
+      float: left;
+      list-style-type: none;
+      margin: 0px 0px; }
+    .App .SongItem ul li {
+      display: inline-block;
+      padding: 6px 0px;
+      padding-right: 6px;
+      margin: 3px 0px; }
+    .App .SongItem .Name {
+      font-size: 16px;
+      color: #333; }
+    .App .SongItem .Artist {
+      font-size: 13px;
+      color: #999; }
+    .App .SongItem .IsOfficial {
+      background-color: #337ab7;
+      color: #eee;
+      border: 0.2px solid #ddd;
+      border-radius: 5px; }
+      .App .SongItem .IsOfficial span {
+        padding: 1px; }
+    .App .SongItem .Quality {
+      color: #eee;
+      background-color: #eaa037;
+      border: 0.2px solid #ccc;
+      border-radius: 5px; }
+      .App .SongItem .Quality span {
+        padding: 1px; }
+    .App .SongItem .Listened {
+      float: right; }
+    .App .SongItem .Play {
+      float: right; }
+    .App .SongItem .AddToFavourite {
+      float: right; }
+    .App .SongItem .NewWindow {
+      float: right; }
+    .App .SongItem .Name:hover {
+      color: #337ab7;
+      cursor: pointer; }
+    .App .SongItem .Artist:hover {
+      cursor: pointer;
+      color: #337ab7; }
+    .App .SongItem .IsOfficial:hover {
+      cursor: pointer; }
+    .App .SongItem .Quality:hover {
+      cursor: pointer; }
+    .App .SongItem .Listened:hover {
+      cursor: pointer; }
+    .App .SongItem .Play:hover {
+      cursor: pointer;
+      color: #337ab7; }
+    .App .SongItem .AddToFavourite:hover {
+      cursor: pointer;
+      color: #337ab7; }
+    .App .SongItem .NewWindow:hover {
+      cursor: pointer;
+      color: #337ab7; }

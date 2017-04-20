@@ -5,10 +5,10 @@ class Footer extends React.Component {
 		return (
 			<div className="Footer">
 				<div>Footer</div>
-				By luuhoang
+				By luuhoang nguoinaodo
 			</div>
 		);
 	}
 }
 
-export default Signup;
+export default Footer;
